@@ -9,16 +9,18 @@ from django.db import models
 
 
 class profile(models.Model):
-    city = models.CharField(max_length =30)
-    country = models.CharField(max_length =30) 
+    image= models.CharField(max_length =30)
+    name = models.CharField(max_length =30)
+    bio = models.CharField(max_length =30)
     def __str__(self):
         return self.country
 
 
 
     
-class Comment(models.Model):
-    image_name  = models.CharField(max_length =30)
+class Comments(models.Model):
+    name  = models.CharField(max_length =30)
+    bio = models.CharField(max_length =30)
     def __str__(self):
         return self.name
 
@@ -31,7 +33,7 @@ class Comment(models.Model):
      
 class Follow(models.Model):
     name= models.CharField(max_length =30)
-    country = models.CharField(max_length =30) 
+    bio = models.CharField(max_length =30) 
     def __str__(self):
         return self.name
 
