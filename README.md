@@ -20,9 +20,9 @@ python3.6 manage.py runserver
 virgm2020@gmail.com
 
 
-
 ## link to live site on GitHub Pages
 https://github.com/Mukantwarivirginie/Instagram
+
 
 
 ## Copyrght and license information
