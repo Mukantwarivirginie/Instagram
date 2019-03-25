@@ -1,1 +1,28 @@
-#Project Name
+{%extends 'all-instagram/base.html'%}
+{% block content %} 
+{{ block.super}}
+
+<div class="container">
+
+  {% for image in photos %}
+
+  <div class="row text">
+    
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 center">
+      <a  href="image/{{image.id}}" href="location.html"><img src="{{ image.picture.url }}" width="300" height="300"></a>
+     
+      <h2 class="text-center"> {{ image.image_name }}</h2>
+     
+      
+    </div>
+
+  {% empty %}
+  <div class="row">
+    <h2 class="text-center">There no photo instagram</h2>
+  </div>
+  {% endfor %}
+
+</div>
+<br>
+
+{% endblock %}
