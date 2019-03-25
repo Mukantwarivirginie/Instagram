@@ -5,9 +5,10 @@ from django.shortcuts import render,redirect
 import datetime as dt
 from django.http  import HttpResponse
 from .models import Image
-
-
-
+from .email import send_welcome_email
+from .models import Article,NewsLetterRecipients
+from django.http  import HttpResponse,Http404,HttpResponseRedirect
+@login_required(login_url='/accounts/login/')
 
 # Create your views here.
 def Instagram(request):
