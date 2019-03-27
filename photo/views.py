@@ -13,7 +13,8 @@ from django.http  import HttpResponse,Http404,HttpResponseRedirect
 # Create your views here.
 def Instagram(request):
     return render(request, 'instagram.html')
-  
+    return HttpResponse('Welcome to the Instagram')
+ 
 
 def photo_of_day(request):
       date = dt.date.today()
