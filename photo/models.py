@@ -9,7 +9,7 @@ from tinymce.models import HTMLField
 # Create your models here.
 
 
-class profile(models.Model):
+class Profile(models.Model):
     image= models.CharField(max_length =30)
     name = models.CharField(max_length =30)
     bio = models.CharField(max_length =30)
