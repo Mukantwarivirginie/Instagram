@@ -27,23 +27,23 @@ def new_article(request):
 
 # Create your views here.
 def welcome(request):
-    return render(request, 'welcome.html')
-    return HttpResponse('Welcome to the Moringa Tribune')
+    return render(request, 'Instagram.html')
+    return HttpResponse('Welcome to the Instagram')
  
-def news_of_day(request): 
+def instagram_of_day(request): 
     date = dt.date.today()
-    news = Article.todays_news()
+    instagram = Article.todays_news()
     if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
+        form = InstgramLetterForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['your_name']
             email = form.cleaned_data['email']
-            recipient = NewsLetterRecipients(name = name,email =email)
+            recipient = InstagramLetterRecipients(name = name,email =email)
             recipient.save()
             HttpResponseRedirect('news_today')
     else:
-        form = NewsLetterForm()
-    return render(request, 'all-news/today-news.html', {"date": date,"news":news,"letterForm":form})
+        form = InstagramLetterForm()
+    return render(request, 'all-instagram/today-instagram.html', {"date": date,"instagram":news,"letterForm":form})
 
 
 
@@ -74,7 +74,7 @@ def convert_dates(dates):
     # Returning the actual day of the week
     day = days[day_number]
     return day
-def past_days_news(request,past_date):
+def past_days_instagram(request,past_date):
     try:
         # Converts data from the string Url
         date = dt.datetime.strptime(past_date,'%Y-%m-%d').date()
@@ -85,7 +85,7 @@ def past_days_news(request,past_date):
 
     if date == dt.date.today():
      return redirect(news_of_day)
-     return render(request, 'all-news/past-news.html',{"date": date,"news":news})
+     return render(request, 'all-instagram/past-instagram.html',{"date": date,"instagram":news})
     # return render(request, 'all-news/past-news.html', {"date": date})
                                                                
 # day = convert_dates(date)
@@ -105,15 +105,15 @@ def search_results(request):
         searched_articles = Article.search_by_title(search_term)
         message = f"{search_term}"
 
-        return render(request, 'all-news/search.html',{"message":message,"articles": searched_articles})
+        return render(request, 'all-instagram/search.html',{"message":message,"articles": searched_articles})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'all-news/search.html',{"message":message})
+        return render(request, 'all-instagram/search.html',{"message":message})
 
 def article(request,article_id):
     try:
         article = Article.objects.get(id = article_id)
     except DoesNotExist:
         raise Http404()
-    return render(request,"all-news/article.html", {"article":article})
+    return render(request,"all-instagram/article.html", {"article":article})
