@@ -1,2 +1,28 @@
+<!-- <h1> Welcome to the all-instagram Photos</h1> -->
+{%extends 'all-photo/base.html'%}
+{% block content %} 
+{{ block.super}}
 
-<h1> Welcome to the all-instagram Photos</h1>
+<div class="container">
+
+  {% for image in images %}
+
+  <div class="row text">
+    
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 center"><br>
+
+      <h2 class="text-center"> {{ image.name }}</h2><br>
+      <a  href="image/{{image.id}}" href="today-photo.html"><img src="{{ image.picture.url }}" class="img-responsive img" alt="Image" width="400" height="400"><br></a><br>
+      
+    </div>
+
+  {% empty %}
+  <div class="row">
+    <h2 class="text-center">There is no pictures</h2>
+  </div>
+  {% endfor %}
+
+</div>
+<br>
+
+{% endblock %}

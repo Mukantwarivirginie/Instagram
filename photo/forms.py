@@ -1,13 +1,24 @@
 from django import forms
-from .models import Article
-class InstagramLetterForm(forms.Form):
+from .models import Profile,Image
+
+
+class InstagramForm(forms.Form):
     your_name = forms.CharField(label='First Name',max_length=30)
     email = forms.EmailField(label='Email')
 
-class InstagramArticleForm(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
     class Meta:
-        model = Article
-        exclude = ['editor', 'pub_date']
-        widgets = {
-            'tags': forms.CheckboxSelectMultiple(),
-        }  
+        model = Profile
+        exclude = ['user', 'pub_date']
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        exclude = ['user', 'pub_date']
+        
+
+
+
+
+
+ 

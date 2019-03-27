@@ -1,4 +1,4 @@
-{%extends 'all-news/base.html'%}
+{%extends 'all-photo/base.html'%}
 
  {% block content %}
 
@@ -13,14 +13,11 @@
    </div>
 
    <div class="row">
-     {% autoescape on %}
-     {{article.post| safe}}
-    {% endautoescape %}
-
+     <p>{{profile.post}}</p>
    </div>
 
    <div class="row">
-     <p>Posted {profile.pub_date|timesince}} by {{profile.editor.first_name}}</p>
+     <p>Posted {{profile.pub_date|timesince}} by {{profile.editor.first_name}}</p>
    </div>
 
  </div>

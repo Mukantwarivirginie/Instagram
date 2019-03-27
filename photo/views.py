@@ -3,100 +3,75 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render,redirect
 import datetime as dt
-from django.http  import HttpResponse
-from .models import Image,NewArticleForm
+from django.http  import HttpResponse,HttpResponseRedirect,Http404
+from .models import Image
 from .email import send_welcome_email
-# from .models import Article,NewsLetterRecipients
-# from django.http  import HttpResponse,Http404,HttpResponseRedirect
+from .forms import InstagramForm,ImageForm
+from django.contrib.auth.decorators import login_required
 
-# @login_required(login_url='/accounts/login/')
-def new_article(request):
-    current_user = request.user
-    if request.method == 'POST':
-        form = NewArticleForm(request.POST, request.FILES)
-        if form.is_valid():
-            article = form.save(commit=False)
-            article.editor = current_user
-            article.save()
-        return redirect('newsToday')
 
-    else:
-        form = NewArticleForm()
-    return render(request, 'instagram.html', {"form": form})
+
+
 
 
 # Create your views here.
-def welcome(request):
-    return render(request, 'Instagram.html')
-    return HttpResponse('Welcome to the Instagram')
- 
-def instagram_of_day(request): 
-    date = dt.date.today()
-    instagram = Article.todays_news()
+@login_required(login_url='/accounts/login/')
+def instagram(request):
+    return render(request, 'instagram.html')
+    # return HttpResponse('Welcome to the Instagram')
+
+
+@login_required(login_url='/accounts/login/')
+def photo_today(request):
+
     if request.method == 'POST':
-        form = InstgramLetterForm(request.POST)
+        form = InstagramForm(request.POST)
+        if form.is_valid():
+            image = form.cleaned_data['your_name']
+            picture = form.cleaned_data['picture']
+            like=models.TextFieProfileForm
+            HttpResponseRedirecProfileFormtoday
+    else:
+        form = instagramForm()
+    return render(request, 'all-photo/today-photo.html', {"photo":photo,"instagramForm":form})
+
+
+
+@login_required(login_url='/accounts/login/')
+def instagram_of_day(request):
+    
+    if request.method == 'POST':
+        form = InstagramForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['your_name']
             email = form.cleaned_data['email']
-            recipient = InstagramLetterRecipients(name = name,email =email)
+            recipient = InstagramRecipients(name = name,email =email)
             recipient.save()
-            HttpResponseRedirect('news_today')
+            HttpResponseRedirect('photo_today')
     else:
-        form = InstagramLetterForm()
-    return render(request, 'all-instagram/today-instagram.html', {"date": date,"instagram":news,"letterForm":form})
+        form = InstagramForm()
+  
+    return render(request, 'all-photo/todays_pictures.html', {"photo":photo,"InstagramForm":form})    
+
+@login_required(login_url='/accounts/login/')
+def new_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = InstagramForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.editor = current_user
+            profile.save()
+        return redirect('NewsToday')
+
+    else:
+        form = InstagramForm()
+    return render(request, 'new_profile.html', {"form": form})
 
 
 
 
 
-
-# def news_of_day(request):
-#     date = dt.date.today()
-#     news = Article.todays_news()
-#     # return render(request, 'all-news/today-news.html', {"date": date,})
-#     return render(request, 'all-news/today-news.html', {"date": date,"news":news})
-
-
-
-
-
-
-
-   # FUNCTION TO CONVERT DATE OBJECT TO FIND EXACT DAY
-
-def convert_dates(dates):
-
-    # Function that gets the weekday number for the date.
-    day_number = dt.date.weekday(dates)
-
-    days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',"Sunday"]
-
-    # Returning the actual day of the week
-    day = days[day_number]
-    return day
-def past_days_instagram(request,past_date):
-    try:
-        # Converts data from the string Url
-        date = dt.datetime.strptime(past_date,'%Y-%m-%d').date()
-
-    except ValueError:
-        # Raise 404 error when ValueError is thrown
-        raise Http404()
-
-    if date == dt.date.today():
-     return redirect(news_of_day)
-     return render(request, 'all-instagram/past-instagram.html',{"date": date,"instagram":news})
-    # return render(request, 'all-news/past-news.html', {"date": date})
-                                                               
-# day = convert_dates(date)
-# html = f'''
-#         <html>
-#             <body>
-#                 <h1>News for {day} {date.day}-{date.month}-{date.year}</h1>
-#             </body>
-#         </html>
-#             '''
-# return HttpResponse(html)
 
 def search_results(request):
 
@@ -105,15 +80,15 @@ def search_results(request):
         searched_articles = Article.search_by_title(search_term)
         message = f"{search_term}"
 
-        return render(request, 'all-instagram/search.html',{"message":message,"articles": searched_articles})
+        return render(request, 'all-photo/search.html',{"message":message,"articles": searched_articles})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'all-instagram/search.html',{"message":message})
+        return render(request, 'all-photo/search.html',{"message":message})
 
-def article(request,article_id):
+def profile(request,profile_id):
     try:
-        article = Article.objects.get(id = article_id)
+        profile = Profile.objects.get(id = profile_id)
     except DoesNotExist:
         raise Http404()
-    return render(request,"all-instagram/article.html", {"article":article})
+    return render(request,"all-photo/profile.html", {"profile":profile})

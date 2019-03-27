@@ -9,14 +9,20 @@
       {% if form.errors %}
         <p> Password or Username is incorrect </p>
       {% endif %}
+    <div class="sign">
+      <br><p>..Please Login </p>
+      <br><p>..To be able to navigate your Instagram Profile.</p>
+      <br>
+     
       <div class="panel panel-default">
-
+        
         <div class="panel-heading">
           <h3 class="text-center">Sign In</h3>
         </div>
         <div class="panel-body">
 
           <form  action="/accounts/login/" method="post">
+            
             {% csrf_token %}
             {% bootstrap_form form%}
 
@@ -31,9 +37,10 @@
         </div>
 
       </div>
+    </div>
 
     </div>
-    <!-- empty div -->
+  
     <div class="col-md-4"></div>
   </div>
 </div>
