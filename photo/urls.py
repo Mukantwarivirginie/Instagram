@@ -19,7 +19,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.instagram, name = 'instagram'),  
-    url(r'^$', views.instagram_of_day, name='photoToday'),
+    url(r'^$', views.new_article, name = 'instagram'),  
+    
  
 ]

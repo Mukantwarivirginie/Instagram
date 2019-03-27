@@ -37,11 +37,6 @@ class Follow(models.Model):
     bio = models.CharField(max_length =30) 
     def __str__(self):
         return self.name
-
-
-
-
-
 class Image(models.Model):
     image = models.CharField(max_length =30)
     picture = models.ImageField(upload_to='photo/') 
@@ -50,3 +45,12 @@ class Image(models.Model):
     # category = models.ForeignKey(Category)
     def __str__(self):
         return self.image
+
+class NewArticleForm(models.Model):
+    image = models.CharField(max_length =30)
+    picture = models.ImageField(upload_to='photo/') 
+    like= models.TextField()
+
+
+
+

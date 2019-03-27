@@ -4,12 +4,12 @@ from django.shortcuts import render
 from django.shortcuts import render,redirect
 import datetime as dt
 from django.http  import HttpResponse
-from .models import Image
+from .models import Image,NewArticleForm
 from .email import send_welcome_email
 # from .models import Article,NewsLetterRecipients
 # from django.http  import HttpResponse,Http404,HttpResponseRedirect
 
-@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
 def new_article(request):
     current_user = request.user
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def new_article(request):
 
     else:
         form = NewArticleForm()
-    return render(request, 'new_article.html', {"form": form})
+    return render(request, 'instagram.html', {"form": form})
 
 
 # Create your views here.
