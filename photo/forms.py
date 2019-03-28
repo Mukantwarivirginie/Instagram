@@ -14,7 +14,7 @@ class ProfileForm(forms.ModelForm):
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = ['user', 'pub_date']
+        exclude = ['user', 'pub_date','like']
         
 
 

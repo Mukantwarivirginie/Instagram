@@ -9,13 +9,14 @@
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="{% url 'photoToday' %}">The Instagram photo</a>
+        <a class="navbar-brand" href="{% url 'instagram' %}">The Instagram photo</a>
       </div>
   
       <!-- Adding a search form  -->
       <div class="col-sm-4 col-md-4 navbar-right">
   
-        <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+        <form >
+            
   
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search Article" name="article">
@@ -47,6 +48,12 @@
                       <li>
                         <a href="{%url 'view_profile'%}">View Profile</a>
                       </li>
+                      <li>
+                        <a href="{%url 'postimage'%}">AddImage</a>
+                      </li>
+
+                    
+                    
                       <li>
                         <a href="/accounts/password/change">Change Password</a>
                       </li>

@@ -47,10 +47,13 @@ class Follow(models.Model):
     bio = models.CharField(max_length =30) 
     def __str__(self):
         return self.name
+
+
 class Image(models.Model):
     image_name = models.CharField(max_length =30)
     image = models.ImageField(upload_to='photo/') 
     like= models.TextField()
+ 
  
     def __str__(self):
         return self.image
@@ -67,10 +70,10 @@ class Image(models.Model):
         return Image.objects.get(id=id)
 
 
-    @classmethod
-    def search_by_title(cls,search_term):
-        photo = cls.objects.filter(title__icontains=search_term)
-        return photo
+    # @classmethod
+    # def search_by_title(cls,search_term):
+    #     photo = cls.objects.filter(title__icontains=search_term)
+    #     return photo
 
 class NewArticleForm(models.Model):
     image = models.CharField(max_length =30)

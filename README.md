@@ -2,7 +2,7 @@
 Instagram
 
 ## Author name
-Mukantwarivirginie
+Mukantwari virginie
 
 ## Technology used
 

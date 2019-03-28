@@ -17,7 +17,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def instagram(request):
-    return render(request, 'instagram.html')
+    images=Image.objects.all()
+    return render(request, 'instagram.html',{'images':images})
     # return HttpResponse('Welcome to the Instagram')
 
 def profile(request,profile_id):
@@ -97,35 +98,48 @@ def view_profile(request):
 
 @login_required(login_url='/accounts/login/')
 def addimage(request):
-    current_user = request.user
-    image = Image.objects.filter(editor=current_user.id)
-    print(profile)
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            profile_form = form.save(commit=False)
-            profile_form.editor = current_user
-            profile_form.save()
 
-        return redirect('view-profile')
+    current_user = request.user
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = current_user
+            image.save()
+   
+        return redirect('instagram')
 
     else:
         form = ImageForm()
-    return render(request, 'view_profile.html', {"form": form,"profile":profile})
+    return render(request, 'addimage.html', {"form": form})
 
-
-
-
-def search_results(request):
-
-    if 'article' in request.GET and request.GET["article"]:
-        search_term = request.GET.get("article")
-        searched_articles = Article.search_by_title(search_term)
-        message = f"{search_term}"
-
-        return render(request, 'all-photo/search.html',{"message":message,"articles": searched_articles})
+@login_required(login_url='/accounts/login/')
+def postimage(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form =  ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = current_user
+            image.save()
+        return redirect('instagram')
 
     else:
-        message = "You haven't searched for any term"
-        return render(request, 'all-photo/search.html',{"message":message})
+        form =  ImageForm()
+    return render(request, 'postimage.html', {"form": form})
+
+
+
+# def search_results(request):
+
+#     if 'article' in request.GET and request.GET["article"]:
+#         search_term = request.GET.get("article")
+#         searched_articles = Article.search_by_title(search_term)
+#         message = f"{search_term}"
+
+#         return render(request, 'all-photo/search.html',{"message":message,"articles": searched_articles})
+
+#     else:
+#         message = "You haven't searched for any term"
+#         return render(request, 'all-photo/search.html',{"message":message})
 
