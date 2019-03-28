@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import render,redirect
 import datetime as dt
 from django.http  import HttpResponse,HttpResponseRedirect,Http404
-from .models import Image
+from .models import Image,Profile
 from .email import send_welcome_email
 from .forms import InstagramForm,ImageForm, ProfileForm
 from django.contrib.auth.decorators import login_required
@@ -79,19 +79,39 @@ def new_profile(request):
 @login_required(login_url='/accounts/login/')
 def view_profile(request):
     current_user = request.user
+    profile = Profile.objects.filter(editor=current_user.id)
+    print(profile)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            profile = form.save(commit=False)
-            profile.editor = current_user
-            profile.save()
+            profile_form = form.save(commit=False)
+            profile_form.editor = current_user
+            profile_form.save()
+
         return redirect('view-profile')
 
     else:
         form = ProfileForm()
-    return render(request, 'view_profile.html', {"form": form})
+    return render(request, 'view_profile.html', {"form": form,"profile":profile})
 
 
+@login_required(login_url='/accounts/login/')
+def addimage(request):
+    current_user = request.user
+    image = Image.objects.filter(editor=current_user.id)
+    print(profile)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile_form = form.save(commit=False)
+            profile_form.editor = current_user
+            profile_form.save()
+
+        return redirect('view-profile')
+
+    else:
+        form = ImageForm()
+    return render(request, 'view_profile.html', {"form": form,"profile":profile})
 
 
 
