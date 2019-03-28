@@ -20,6 +20,13 @@ def instagram(request):
     return render(request, 'instagram.html')
     # return HttpResponse('Welcome to the Instagram')
 
+def profile(request,profile_id):
+    try:
+        profile = Profile.objects.get(id = profile_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request,"all-photo/profile.html", {"profile":profile})
+
 
 @login_required(login_url='/accounts/login/')
 def photo_today(request):
@@ -69,6 +76,22 @@ def new_profile(request):
     return render(request, 'new_profile.html', {"form": form})
 
 
+@login_required(login_url='/accounts/login/')
+def view_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.editor = current_user
+            profile.save()
+        return redirect('view-profile')
+
+    else:
+        form = ProfileForm()
+    return render(request, 'view_profile.html', {"form": form})
+
+
 
 
 
@@ -86,9 +109,3 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'all-photo/search.html',{"message":message})
 
-def profile(request,profile_id):
-    try:
-        profile = Profile.objects.get(id = profile_id)
-    except DoesNotExist:
-        raise Http404()
-    return render(request,"all-photo/profile.html", {"profile":profile})
