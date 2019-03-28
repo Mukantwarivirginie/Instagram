@@ -9,7 +9,7 @@ class InstagramForm(forms.Form):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['user', 'pub_date']
+        exclude = ['user', 'pub_date','editor']
 
 class ImageForm(forms.ModelForm):
     class Meta:

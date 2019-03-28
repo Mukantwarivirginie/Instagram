@@ -6,7 +6,7 @@ import datetime as dt
 from django.http  import HttpResponse,HttpResponseRedirect,Http404
 from .models import Image
 from .email import send_welcome_email
-from .forms import InstagramForm,ImageForm
+from .forms import InstagramForm,ImageForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -57,15 +57,15 @@ def instagram_of_day(request):
 def new_profile(request):
     current_user = request.user
     if request.method == 'POST':
-        form = InstagramForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             profile = form.save(commit=False)
             profile.editor = current_user
             profile.save()
-        return redirect('NewsToday')
+        return redirect('new-profile')
 
     else:
-        form = InstagramForm()
+        form = ProfileForm()
     return render(request, 'new_profile.html', {"form": form})
 
 

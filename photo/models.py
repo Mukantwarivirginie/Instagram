@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    image= models.CharField(max_length =30)
+    image= models.ImageField(upload_to='photo/') 
     name = models.CharField(max_length =30)
     bio = models.CharField(max_length =30)
     editor = models.ForeignKey(User,on_delete=models.CASCADE) 
@@ -30,7 +30,7 @@ class Profile(models.Model):
 
     
 class Comments(models.Model):
-    name  = models.CharField(max_length =30)
+    name  = models.Field(max_length =30)
     bio = models.CharField(max_length =30)
     def __str__(self):
         return self.name
