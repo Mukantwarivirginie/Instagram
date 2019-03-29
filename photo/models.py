@@ -53,6 +53,8 @@ class Image(models.Model):
     image_name = models.CharField(max_length =30)
     image = models.ImageField(upload_to='photo/') 
     like= models.TextField()
+
+     
  
  
     def __str__(self):
@@ -70,10 +72,10 @@ class Image(models.Model):
         return Image.objects.get(id=id)
 
 
-    # @classmethod
-    # def search_by_title(cls,search_term):
-    #     photo = cls.objects.filter(title__icontains=search_term)
-    #     return photo
+    @classmethod
+    def search_by_title(cls,search_term):
+        photo = cls.objects.filter(image_name__icontains=search_term)
+        return photo
 
 class NewArticleForm(models.Model):
     image = models.CharField(max_length =30)

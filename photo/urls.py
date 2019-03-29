@@ -22,7 +22,7 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^$', views.instagram, name = 'instagram'),
-    # url(r'^search/', views.search_results, name='search_results'),
+    url(r'^search/', views.search_results, name='search_results'),
     url(r'^profile/(\d+)',views.profile,name ='profile'),
     url(r'^new/profile$', views.new_profile, name='new-profile'),
     url(r'^new/view_profile$', views.view_profile, name='view_profile'),
